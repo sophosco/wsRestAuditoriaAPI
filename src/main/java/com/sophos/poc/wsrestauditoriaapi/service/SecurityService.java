@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -26,7 +27,7 @@ public class SecurityService {
 	@Autowired
 	Constantes cts;
 	
-	public Boolean verifyJwtToken(String token, String payload) {
+	public HttpStatus verifyJwtToken(String token, String payload) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 
@@ -43,8 +44,8 @@ public class SecurityService {
 		SecurityRs response = restTemplate.exchange(pr.getSecurityEndpointValidate(),HttpMethod.POST,request , SecurityRs.class).getBody();
 		
 		if (response.getResponseHeader().getStatus().getCode().equals(cts.SECURITY_SUCCESS)) {
-			return true;
+			return HttpStatus.ACCEPTED;
 		}
-		return false;
+		return HttpStatus.UNAUTHORIZED;
 	}
 }

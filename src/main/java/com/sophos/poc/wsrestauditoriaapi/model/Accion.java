@@ -1,9 +1,10 @@
 package com.sophos.poc.wsrestauditoriaapi.model;
-
 import java.time.OffsetDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.validation.annotation.Validated;
@@ -19,7 +20,8 @@ public class Accion {
 	  @JsonProperty("FechaCreacion")
 	  private OffsetDateTime fechaCreacion = null;
 	  
-	  @Id 
+	  @Id
+	  @NotNull(message="El campo 'IdSesion' es requerido")
 	  @JsonProperty("IdSesion")
 	  private String idSesion = null;
 
@@ -40,6 +42,9 @@ public class Accion {
 
 	  @JsonProperty("IdCategoria")
 	  private String idCategoria = null;
+	  
+	  @JsonProperty("MessageData")
+	  private String messageData = null;
 
 	  public Accion fechaCreacion(OffsetDateTime fechaCreacion) {
 	    this.fechaCreacion = fechaCreacion;
@@ -200,8 +205,17 @@ public class Accion {
 	    this.idCategoria = idCategoria;
 	  }
 
+	  
 
-	  @Override
+	  public String getMessageData() {
+		return messageData;
+	}
+
+	public void setMessageData(String messageData) {
+		this.messageData = messageData;
+	}
+
+	@Override
 	  public boolean equals(java.lang.Object o) {
 	    if (this == o) {
 	      return true;
@@ -229,7 +243,7 @@ public class Accion {
 	  public String toString() {
 	    StringBuilder sb = new StringBuilder();
 	    sb.append("{\n");
-	    
+	    sb.append("    \"RqUID\": \"").append(UUID.randomUUID().toString()).append("\",\n");
 	    sb.append("    \"FechaCreacion\": \"").append(toIndentedString(fechaCreacion)).append("\",\n");
 	    sb.append("    \"IdSesion\": \"").append(toIndentedString(idSesion)).append("\",\n");
 	    sb.append("    \"IdUsuario\": \"").append(toIndentedString(idUsuario)).append("\",\n");
@@ -237,7 +251,8 @@ public class Accion {
 	    sb.append("    \"DescripcionAccion\": \"").append(toIndentedString(descripcionAccion)).append("\",\n");
 	    sb.append("    \"ModuloAplicacion\": \"").append(toIndentedString(moduloAplicacion)).append("\",\n");
 	    sb.append("    \"IdProducto\": ").append(toIndentedString(idProducto)).append(",\n");
-	    sb.append("    \"IdCategoria\": ").append(toIndentedString(idCategoria)).append("\n");
+	    sb.append("    \"IdCategoria\": ").append(toIndentedString(idCategoria)).append(", \n");
+	    sb.append("    \"MessageData\": \"").append(toIndentedString(messageData)).append("\"\n");
 	    sb.append("}");
 	    return sb.toString();
 	  }

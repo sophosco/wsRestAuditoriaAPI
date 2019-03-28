@@ -66,14 +66,27 @@ public class AuditoriaRestAPI {
 				produces = { "application/json", "application/xml" }, 
 			    consumes = { "application/json", "application/xml" },
 			    method=RequestMethod.POST)
-    public ResponseEntity<Estado> addActividad(@ApiParam(value = "Identificador Único con formato de 32 dígitos hexadecimales divididos en guiones: 550e8400-e29b-41d4-a716-446655440000" ,required=true) @RequestHeader(value="X-RqUID", required=true) String xRqUID,@ApiParam(value = "Nemonico de Canal Origen de la Transaccion" ,required=true) @RequestHeader(value="X-Channel", required=true) String xChannel,@ApiParam(value = "IP de origen donde se realiza la invocación de servicio o api" ,required=true) @RequestHeader(value="X-IPAddr", required=true) String xIPAddr,@ApiParam(value = "Sesion o token de autenticación del uso del api" ,required=true) @RequestHeader(value="X-Sesion", required=true) String xSesion,@ApiParam(value = "Definicion de accion de usuario a registrar" ,required=true )  @Valid @RequestBody  Accion body) {
+    public ResponseEntity<Estado> addActividad(
+    		@ApiParam(value = "Identificador Único con formato de 32 dígitos hexadecimales divididos en guiones: 550e8400-e29b-41d4-a716-446655440000" ,required=true)
+    		@RequestHeader(value="X-RqUID", required=true) String xRqUID,
+    		@ApiParam(value = "Nemonico de Canal Origen de la Transaccion" ,required=true) 
+    		@RequestHeader(value="X-Channel", required=true) String xChannel,
+    		@ApiParam(value = "IP de origen donde se realiza la invocación de servicio o api" ,required=true) 
+    		@RequestHeader(value="X-IPAddr", required=true) String xIPAddr,
+    		@ApiParam(value = "Sesion o token de autenticación del uso del api" ,required=true) 
+    		@RequestHeader(value="X-Sesion", required=true) String xSesion,
+    		@ApiParam(value = "Bandera para validacion de seguridad" ,required=true) 
+    		@RequestHeader(value="X-haveToken", required=false) String xHaveToken,
+    		@ApiParam(value = "Definicion de accion de usuario a registrar" ,required=true )
+    		@Valid @RequestBody  Accion body) {		
     	String contentType = request.getContentType();
     	String tokenSesion = request.getHeader("X-Sesion");
-    	Estado response= new Estado();
-		if (contentType != null && contentType.contains("application/json") && tokenSesion != null
-				&& tokenSesion != "") {
-			try {
-				if (security.verifyJwtToken(tokenSesion, body.getIdSesion())) {
+    	String securityValidation = request.getHeader("X-haveToken");    	
+		if (contentType != null && contentType.contains("application/json") && tokenSesion != null	&& tokenSesion != "") {			
+			Estado response= new Estado();
+			try {				
+				if (security.verifyJwtToken(tokenSesion, body.getIdSesion()).equals(HttpStatus.ACCEPTED) 
+						|| ( securityValidation != null && securityValidation.equals("false"))) {
 					toActive.publishMessage(body);
 					return new ResponseEntity<Estado>(HttpStatus.OK);
 				}else {
