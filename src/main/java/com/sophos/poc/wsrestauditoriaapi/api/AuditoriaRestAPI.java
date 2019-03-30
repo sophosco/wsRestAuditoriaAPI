@@ -34,11 +34,11 @@ public class AuditoriaRestAPI {
 	private final ObjectMapper objectMapper;
 	private final HttpServletRequest request; 
 	@Autowired
-	ActiveMqRestClientService toActive;
+	private ActiveMqRestClientService toActive;
 	@Autowired
-	AuditoriaRestAPIProcessExceptions pExceptions;
+	private AuditoriaRestAPIProcessExceptions pExceptions;
 	@Autowired
-	SecurityService security;
+	private SecurityService security;
 
 	
 	private static final Logger logger = LogManager.getLogger(AuditoriaRestAPI.class);
@@ -81,23 +81,29 @@ public class AuditoriaRestAPI {
     		@Valid @RequestBody  Accion body) {		
     	String contentType = request.getContentType();
     	String tokenSesion = request.getHeader("X-Sesion");
-    	String securityValidation = request.getHeader("X-haveToken");    	
+    	String securityValidation = request.getHeader("X-haveToken");  
+    	logger.info("AuditoriaRq:  contentType= " + contentType + " IdSesion="+body.getIdSesion());
+    	String statusRs = null;
 		if (contentType != null && contentType.contains("application/json") && tokenSesion != null	&& tokenSesion != "") {			
 			Estado response= new Estado();
 			try {				
-				if (security.verifyJwtToken(tokenSesion, body.getIdSesion()).equals(HttpStatus.ACCEPTED) 
-						|| ( securityValidation != null && securityValidation.equals("false"))) {
+				if ( ( securityValidation != null && securityValidation.equals("false")) ||
+						 security.verifyJwtToken(tokenSesion, body.getIdSesion()).equals(HttpStatus.ACCEPTED)) {
 					toActive.publishMessage(body);
+					statusRs = HttpStatus.OK.toString();
 					return new ResponseEntity<Estado>(HttpStatus.OK);
 				}else {
 					response.setCodigo(HttpStatus.UNAUTHORIZED.toString());
 					response.setMensaje(HttpStatus.UNAUTHORIZED.toString());
+					statusRs = HttpStatus.UNAUTHORIZED.toString();
 					return new ResponseEntity<Estado>(response, HttpStatus.UNAUTHORIZED);
 				}
 			} catch (Exception e) {
 				response = pExceptions.recordFailureResponse(e);
-				logger.error("Error: ", e);
+				logger.error("Error Auditoria: ", e);
 				return new ResponseEntity<Estado>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			}finally {
+				logger.info("AuditoriaRs:  " + statusRs );
 			}
 		}
         return new ResponseEntity<Estado>(HttpStatus.UNAUTHORIZED);

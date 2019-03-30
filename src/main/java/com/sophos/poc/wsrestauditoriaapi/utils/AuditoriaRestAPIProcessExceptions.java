@@ -14,7 +14,7 @@ public class AuditoriaRestAPIProcessExceptions {
 	
 	private static final Logger logger = LogManager.getLogger(AuditoriaRestAPIProcessExceptions.class);
 	@Autowired
-	Constantes cts;
+	private Constantes cts;
 	
 	public Estado recordFailureResponse(Exception ex) {
 		Estado response = new Estado();

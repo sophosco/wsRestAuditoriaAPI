@@ -2,6 +2,7 @@ package com.sophos.poc.wsrestauditoriaapi.service;
 
 import java.util.Arrays;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,9 +24,9 @@ import com.sophos.poc.wsrestauditoriaapi.utils.DefaultProperties;
 public class SecurityService {
 
 	@Autowired
-	DefaultProperties pr;
+	private DefaultProperties pr;
 	@Autowired
-	Constantes cts;
+	private Constantes cts;
 	
 	public HttpStatus verifyJwtToken(String token, String payload) {
 		HttpHeaders headers = new HttpHeaders();
@@ -41,8 +42,9 @@ public class SecurityService {
 		
 		HttpEntity<SecurityRq> request = new HttpEntity<SecurityRq>(inRequest ,headers);
 		RestTemplate restTemplate = new RestTemplate();
+	
 		SecurityRs response = restTemplate.exchange(pr.getSecurityEndpointValidate(),HttpMethod.POST,request , SecurityRs.class).getBody();
-		
+
 		if (response.getResponseHeader().getStatus().getCode().equals(cts.SECURITY_SUCCESS)) {
 			return HttpStatus.ACCEPTED;
 		}

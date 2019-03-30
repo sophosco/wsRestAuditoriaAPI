@@ -25,7 +25,7 @@ import com.sophos.poc.wsrestauditoriaapi.utils.DefaultProperties;
 public class ActiveMqRestClientService {
 
 	@Autowired
-	DefaultProperties dfp;
+	private DefaultProperties dfp;
 
 	private String queue, endPoint, user, pass = null;
 	
@@ -58,7 +58,6 @@ public class ActiveMqRestClientService {
 				producerConnection.close();
 				pooledConnectionFactory.stop();
 			} catch (Exception e) {
-				e.printStackTrace();
 				logger.error("Error Cerrando las conexiones con ActiveMQ: ",e);				
 			}			
 		} catch (JMSException jmsex) {

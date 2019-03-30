@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableAsync
 @ServletComponentScan
 public class WsRestAuditoriaApiApplication {
-
+	
 	public static void main(String[] args) {
 		SpringApplication.run(WsRestAuditoriaApiApplication.class, args);
 	}
