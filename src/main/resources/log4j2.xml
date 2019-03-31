@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Properties>
+		<property name="app">wsRestAudit</property>
+		<property name="locationFile">D:/Logs/</property>
+		<Property name="log_pattern">%style{%d{ISO8601}}{black} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%C{1.}}{bright,yellow}: %msg%n%throwable</Property>
+		<property name="pattern">[%d][%5p][%15t][%30c{1}][%20m][%L]: %m%n</property>
+		<property name="patternFile">${locationFile}/$${date:yyyy-MM}/${app}-%d{yyyy-MM-dd}-%i.log</property>				
+	</Properties>
+    <Appenders>
+	    <Console name="Console" target="SYSTEM_OUT"	follow="true">
+			<PatternLayout pattern="${log_pattern}" />
+		</Console>
+        <RollingFile  name="RollingFile" 
+        	fileName="${locationFile}${app}.log" 
+        	immediateFlush="true" 
+        	filePattern="${patternFile}">
+        	<PatternLayout>
+				<pattern>${pattern}</pattern>
+			</PatternLayout>
+			<Policies>
+				<OnStartupTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10 MB" />
+                <TimeBasedTriggeringPolicy />				
+			</Policies>
+		</RollingFile>        
+    </Appenders> 
+    <Loggers>
+        <!-- LOG everything at INFO level -->
+        <Root level="info">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingFile" />
+        </Root> 
+        <!-- LOG "com.sophos"*" at TRACE level -->
+        <Logger name="com.sophos" level="trace"></Logger>
+    </Loggers> 
+</Configuration>

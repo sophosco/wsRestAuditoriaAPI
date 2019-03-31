@@ -33,39 +33,39 @@ public class ActiveMqRestClientService {
 	@Async
 	public void publishMessage(@Valid Accion request) throws JMSException {
 		loadConfig();	
+		Connection producerConnection = null;
+		Session producerSession = null;
+		MessageProducer producer = null;
+		PooledConnectionFactory pooledConnectionFactory = null;
 		try {
 			String message = request.toString();
 
 			ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(getEndPoint());
 			connectionFactory.setUserName(getUser());
 			connectionFactory.setPassword(getPass());
-			PooledConnectionFactory pooledConnectionFactory = new PooledConnectionFactory();
+			pooledConnectionFactory = new PooledConnectionFactory();
 			pooledConnectionFactory.setConnectionFactory(connectionFactory);
 			pooledConnectionFactory.setMaxConnections(10);
-			Connection producerConnection = pooledConnectionFactory.createConnection();
+			producerConnection = pooledConnectionFactory.createConnection();
 
 			producerConnection.start();
-			Session producerSession = producerConnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+			producerSession = producerConnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 			Destination producerDestination = producerSession.createQueue(getQueue());
-			MessageProducer producer = producerSession.createProducer(producerDestination);
+			producer = producerSession.createProducer(producerDestination);
 			producer.setDeliveryMode(DeliveryMode.PERSISTENT);
-
 			TextMessage producerMessage = producerSession.createTextMessage(message);
-			producer.send(producerMessage);
-			try {
-				producer.close();
-				producerSession.close();
-				producerConnection.close();
-				pooledConnectionFactory.stop();
-			} catch (Exception e) {
-				logger.error("Error Cerrando las conexiones con ActiveMQ: ",e);				
-			}			
+			producer.send(producerMessage);		
 		} catch (JMSException jmsex) {
 			logger.error("Error JMSException jmsex: ");
 			throw jmsex;
 		} catch (Exception ex) {
 			logger.error("Error General Exception ex: ");
 			throw ex;
+		}finally {
+			producer.close();
+			producerSession.close();
+			producerConnection.close();
+			pooledConnectionFactory.stop();
 		}		
 	}
 
