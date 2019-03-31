@@ -18,9 +18,9 @@ public class AuditoriaRestAPIProcessExceptions {
 	
 	public Estado recordFailureResponse(Exception ex) {
 		Estado response = new Estado();
-		response.setCodigo(cts.STATUS_CODE_500);
-		response.setMensaje(ex.getMessage());
+		response.setCodigo(cts.STATUS_CODE_500);		
 		if (ex != null) {
+			response.setMensaje(ex.getMessage());
 			ArrayList<String> exceptionList = processException(ex);			
 			response.setExcepcion(exceptionList.toString());
 		}

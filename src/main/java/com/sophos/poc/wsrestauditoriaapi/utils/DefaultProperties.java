@@ -22,7 +22,7 @@ public class DefaultProperties {
 
 	public DefaultProperties getInstance() {
 		if (instance == null) {
-			return instance = new DefaultProperties();
+			return new DefaultProperties();
 		}
 		return instance;
 	}
@@ -38,11 +38,11 @@ public class DefaultProperties {
 			String envUS = System.getenv().get(cts.POC_ACTIVE_USR);
 			String envPS = System.getenv().get(cts.POC_ACTIVE_PSS);
 			String envSE = System.getenv().get(cts.POC_SERVICE_SECURITY_VALIDATE);
-			setEndpoint(envEP != null && envEP != "" ? envEP : pr.getProperty(cts.PRP_FILE_ENDPOINT));
-			setQueue(envQU != null && envQU != "" ? envQU : pr.getProperty(cts.PRP_FILE_QUEUE));
-			setUser(envUS != null && envUS != "" ? envUS : pr.getProperty(cts.PRP_FILE_USR));
-			setPass(envPS != null && envPS != "" ? envPS : pr.getProperty(cts.PRP_FILE_PSS));
-			setSecurityEndpointValidate(envSE != null && envSE != "" ? envSE : pr.getProperty(cts.PRP_FILE_SECURITY_VALIDATE));
+			setEndpoint(envEP != null && !envEP.equals("") ? envEP : pr.getProperty(cts.PRP_FILE_ENDPOINT));
+			setQueue(envQU != null && !envQU.equals("") ? envQU : pr.getProperty(cts.PRP_FILE_QUEUE));
+			setUser(envUS != null && !envUS.equals("") ? envUS : pr.getProperty(cts.PRP_FILE_USR));
+			setPass(envPS != null && !envPS.equals("")  ? envPS : pr.getProperty(cts.PRP_FILE_PSS));
+			setSecurityEndpointValidate(envSE != null && !envSE.equals("") ? envSE : pr.getProperty(cts.PRP_FILE_SECURITY_VALIDATE));
 		} catch (IOException ex) {
 			logger.error("Problem occurs when reading Default Properties !!!", ex);
 		}

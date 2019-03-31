@@ -84,7 +84,7 @@ public class AuditoriaRestAPI {
     	String securityValidation = request.getHeader("X-haveToken");  
     	logger.info("AuditoriaRq:  contentType= " + contentType + " IdSesion="+body.getIdSesion());
     	String statusRs = null;
-		if (contentType != null && contentType.contains("application/json") && tokenSesion != null	&& tokenSesion != "") {			
+		if (contentType != null && contentType.contains("application/json") && tokenSesion != null	&& !tokenSesion.equals("")) {			
 			Estado response= new Estado();
 			try {				
 				if ( ( securityValidation != null && securityValidation.equals("false")) ||
