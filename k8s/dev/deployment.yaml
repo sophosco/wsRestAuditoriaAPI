@@ -1,0 +1,30 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: wsrestauditoriaapi-deployment
+  namespace: dev
+  labels:
+    app: wsrestauditoriaapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wsrestauditoriaapi
+  template:
+    metadata:
+      labels:
+        app: wsrestauditoriaapi
+    spec:
+      containers:
+        - name: wsrestauditoriaapi
+          image: 887482798966.dkr.ecr.us-east-2.amazonaws.com/sophosstore/wsrestauditoriaapi:beta
+          resources:
+            limits:
+              memory: "500Mi"
+              cpu: "200m"
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 18082
+          envFrom:
+          - configMapRef:
+              name: wsrestauditoriaapi-configmap
