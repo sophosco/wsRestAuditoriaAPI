@@ -61,6 +61,7 @@ public class ActiveMqRestClientService {
 		} catch (Exception ex) {
 			logger.error("Error General Exception ex: ");
 			throw ex;
+
 		}finally {
 			if(producer!= null) {producer.close();}
 			if (producerSession!= null) { try {producerSession.close();} catch (Exception e) {	logger.error("Error Closing  producerSession: ", e);}}
