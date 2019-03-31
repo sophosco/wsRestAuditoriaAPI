@@ -64,9 +64,10 @@ public class ActiveMqRestClientService {
 
 		}finally {
 			if(producer!= null) {producer.close();}
-			if (producerSession!= null) { try {producerSession.close();} catch (Exception e) {	logger.error("Error Closing  producerSession: ", e);}}
-			if(producerConnection != null) {try {producerConnection.close();} catch (Exception e) {logger.error("Error Closing producerConnection: ", e);}}
-			if(pooledConnectionFactory != null) {pooledConnectionFactory.stop();}			
+			if(pooledConnectionFactory != null) {pooledConnectionFactory.stop();}		
+			if(producerSession!= null) { try {producerSession.close();} catch (Exception e) {	logger.error("Error Closing  producerSession: ", e);}}
+			if(producerConnection != null) {try {producerConnection.close();} catch (Exception e) {logger.error("Error Closing producerConnection: ", e);}}				
+
 		}		
 	}
 	
