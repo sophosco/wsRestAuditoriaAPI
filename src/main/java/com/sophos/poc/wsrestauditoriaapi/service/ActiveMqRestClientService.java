@@ -62,13 +62,12 @@ public class ActiveMqRestClientService {
 			logger.error("Error General Exception ex: ");
 			throw ex;
 		}finally {
-			producer.close();
-			producerSession.close();
-			producerConnection.close();
-			pooledConnectionFactory.stop();
+			if(producer!= null) {producer.close();}
+			if (producerSession!= null) {producerSession.close();}
+			if(producerConnection != null) {producerConnection.close();}
+			if(pooledConnectionFactory != null) {pooledConnectionFactory.stop();}			
 		}		
 	}
-
 	
 
 	private void loadConfig() {
