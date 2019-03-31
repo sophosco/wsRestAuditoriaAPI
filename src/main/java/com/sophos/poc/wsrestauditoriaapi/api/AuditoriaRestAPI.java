@@ -8,10 +8,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -62,10 +62,7 @@ public class AuditoriaRestAPI {
 			@ApiResponse(code = 501, message = "Ha ocurrido un error en la invocación"),
 			@ApiResponse(code = 503, message = "Ha ocurrido un error en la invocación")		
 			})
-	@RequestMapping(value="/add", 
-				produces = { "application/json", "application/xml" }, 
-			    consumes = { "application/json", "application/xml" },
-			    method=RequestMethod.POST)
+	@PostMapping(path="/add" , consumes = "application/json", produces = "application/json")
     public ResponseEntity<Estado> addActividad(
     		@ApiParam(value = "Identificador Único con formato de 32 dígitos hexadecimales divididos en guiones: 550e8400-e29b-41d4-a716-446655440000" ,required=true)
     		@RequestHeader(value="X-RqUID", required=true) String xRqUID,
@@ -91,17 +88,17 @@ public class AuditoriaRestAPI {
 						 security.verifyJwtToken(tokenSesion, body.getIdSesion()).equals(HttpStatus.ACCEPTED)) {
 					toActive.publishMessage(body);
 					statusRs = HttpStatus.OK.toString();
-					return new ResponseEntity<Estado>(HttpStatus.OK);
+					return new ResponseEntity<>(HttpStatus.OK);
 				}else {
 					response.setCodigo(HttpStatus.UNAUTHORIZED.toString());
 					response.setMensaje(HttpStatus.UNAUTHORIZED.toString());
 					statusRs = HttpStatus.UNAUTHORIZED.toString();
-					return new ResponseEntity<Estado>(response, HttpStatus.UNAUTHORIZED);
+					return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
 				}
 			} catch (Exception e) {
 				response = pExceptions.recordFailureResponse(e);
 				logger.error("Error Auditoria: ", e);
-				return new ResponseEntity<Estado>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 			}finally {
 				logger.info("AuditoriaRs:  " + statusRs );
 			}

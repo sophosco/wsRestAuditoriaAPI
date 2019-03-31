@@ -23,11 +23,10 @@ public class SwaggerConfig {
 	}
 
 	private ApiInfo metaData() {
-		ApiInfo apiInfo = new ApiInfo("API REST Auditoria", "API Auditoria PoC Sophos Solutions", "1.0",
+		return new ApiInfo("API REST Auditoria", "API Auditoria PoC Sophos Solutions", "1.0",
 				"Terms of service",
 				new Contact("Sophos Solutions", "https://www.sophossolutions.com", "digitals@sophossolutions.com"),
 				"Apache License Version 2.0", "https://www.apache.org/licenses/LICENSE-2.0");
-		return apiInfo;
 	}
 
 }
