@@ -4,7 +4,7 @@ metadata:
   name: wsrestauditoriaapi-configmap
   namespace: dev
 data:
-  POC_REDIS_HOST: 'http://redis-master'
+  POC_REDIS_HOST: 'redis-master'
   POC_REDIS_PORT: '6379'
   POC_CASSANDRA_KEYSPACE: 'sophospoc'
   POC_CASSANDRA_HOST: 'http://cassandra'
@@ -13,4 +13,4 @@ data:
   POC_ACTIVE_QUEUE: 'poc.audit.queue'
   POC_ACTIVE_PSS: 'adminsophos.2019'
   POC_ACTIVE_ENDPOINT: 'ssl://b-d29d0c02-d319-46c4-b11d-c298669f7aca-1.mq.us-east-2.amazonaws.com:61617'
-  POC_SERVICE_SECURITY_VALIDATE: 'http://ec2-3-17-205-42.us-east-2.compute.amazonaws.com:3000/services/security/verifyJwtToken/'
+  POC_SERVICE_SECURITY_VALIDATE: 'http://wsrestsecurity:3000/services/security/verifyJwtToken/'
