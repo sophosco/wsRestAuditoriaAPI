@@ -15,5 +15,10 @@ public class SecurityRequestPayload {
 		this.id = id;
 	}
 
+	@Override
+	public String toString() {
+		return "SecurityRequestPayload [id=" + id + "]";
+	}
+
 	
 }

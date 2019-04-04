@@ -48,9 +48,11 @@ public class SecurityService {
 		HttpEntity<SecurityRq> request = new HttpEntity<SecurityRq>(inRequest ,headers);
 		RestTemplate restTemplate = new RestTemplate();
 	
+		logger.info("Datos enviados" + inRequest.toString());
+		
 		ResponseEntity<SecurityRs> response = restTemplate.exchange(pr.getSecurityEndpointValidate(),HttpMethod.POST,request , SecurityRs.class);
-		logger.info("response verify" + response.toString());
-		if (response.getBody().getResponseHeader().getStatus().getCode().equals(cts.SECURITY_SUCCESS)) {
+		
+		if (response.getStatusCode().equals(HttpStatus.OK) && response.getBody().getResponseHeader().getStatus().getCode().equals(cts.SECURITY_SUCCESS)) {
 			return HttpStatus.ACCEPTED;
 		}
 		return HttpStatus.UNAUTHORIZED;

@@ -14,6 +14,11 @@ public class SecurityRequestHeader {
 	public void setToken(String token) {
 		this.token = token;
 	}
+
+	@Override
+	public String toString() {
+		return "SecurityRequestHeader [token=" + token + "]";
+	}
 	
 	
 }
