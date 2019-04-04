@@ -54,7 +54,7 @@ public class SecurityService {
 		}
 		return HttpStatus.UNAUTHORIZED;
 		}catch (Exception e) {
-			logger.error("Error invocando servicio verificacion ", pr.getSecurityEndpointValidate(), e  );
+			logger.error("Error invocando servicio verificacion " + pr.getSecurityEndpointValidate(), e  );
 			throw e;
 		}
 	}

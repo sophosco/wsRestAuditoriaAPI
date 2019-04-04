@@ -14,12 +14,10 @@ spec:
       name: http
       targetPort: ed-port
       protocol: TCP
-      nodeport: 443
     - port: 443
       name: https
       targetPort: ed-port
       protocol: TCP
-      nodeport: 443
   type: LoadBalancer    
   selector:
     app: wsrestauditoriaapi
