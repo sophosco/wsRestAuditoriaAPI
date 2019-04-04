@@ -9,8 +9,8 @@ eureka:
       defaultZone: ${EUREKA_URI:http://SBBOGLAPPROJO7.sophos.col.com:8761/eureka}
   instance:
     preferIpAddress: true
-    status-page-url-path: /info
-    health-check-url-path: /myhealth
+    status-page-url-path: /v2/api-docs/
+    health-check-url-path: /api/actividad/health
     virtual-host-name: SBBOGLAPPROJO7
     metadata-map:
       app-owner: Sophos Solutions
