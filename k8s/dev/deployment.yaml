@@ -24,8 +24,8 @@ spec:
               cpu: "200m"
           imagePullPolicy: Always
           ports:
-          - containerPort: 18082
-          - containerPort: 443
+          - name: ed-port
+            containerPort: 18082
           envFrom:
           - configMapRef:
               name: wsrestauditoriaapi-configmap
