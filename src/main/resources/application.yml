@@ -6,7 +6,7 @@ server:
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${EUREKA_URI:http://SBBOGLAPPROJO7.sophos.col.com:8761/eureka}
+      defaultZone: ${POC_EUREKA_URI}
   instance:
     preferIpAddress: true
     status-page-url-path: /v2/api-docs/
