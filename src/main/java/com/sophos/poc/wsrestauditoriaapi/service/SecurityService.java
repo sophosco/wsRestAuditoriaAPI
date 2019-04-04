@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -47,9 +48,9 @@ public class SecurityService {
 		HttpEntity<SecurityRq> request = new HttpEntity<SecurityRq>(inRequest ,headers);
 		RestTemplate restTemplate = new RestTemplate();
 	
-		SecurityRs response = restTemplate.exchange(pr.getSecurityEndpointValidate(),HttpMethod.POST,request , SecurityRs.class).getBody();
-
-		if (response.getResponseHeader().getStatus().getCode().equals(cts.SECURITY_SUCCESS)) {
+		ResponseEntity<SecurityRs> response = restTemplate.exchange(pr.getSecurityEndpointValidate(),HttpMethod.POST,request , SecurityRs.class);
+		logger.info("response verify" + response.toString());
+		if (response.getBody().getResponseHeader().getStatus().getCode().equals(cts.SECURITY_SUCCESS)) {
 			return HttpStatus.ACCEPTED;
 		}
 		return HttpStatus.UNAUTHORIZED;
