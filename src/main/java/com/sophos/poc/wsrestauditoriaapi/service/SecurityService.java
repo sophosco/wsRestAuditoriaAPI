@@ -2,7 +2,8 @@ package com.sophos.poc.wsrestauditoriaapi.service;
 
 import java.util.Arrays;
 
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -28,7 +29,10 @@ public class SecurityService {
 	@Autowired
 	private Constantes cts;
 	
+	private static final Logger logger = LogManager.getLogger(SecurityService.class);
+	
 	public HttpStatus verifyJwtToken(String token, String payload) {
+		try {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 
@@ -49,5 +53,9 @@ public class SecurityService {
 			return HttpStatus.ACCEPTED;
 		}
 		return HttpStatus.UNAUTHORIZED;
+		}catch (Exception e) {
+			logger.error("Error invocando servicio verificacion ", pr.getSecurityEndpointValidate(), e  );
+			throw e;
+		}
 	}
 }
