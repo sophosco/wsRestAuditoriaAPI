@@ -31,7 +31,7 @@ public class SecurityService {
 	public HttpStatus verifyJwtToken(String token, String payload) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-
+		headers.add(cts.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
 		SecurityRq inRequest = new SecurityRq();
 		SecurityRequestHeader requestHeader = new SecurityRequestHeader();
 		SecurityRequestPayload requestPayload = new SecurityRequestPayload(); 

@@ -12,11 +12,11 @@ spec:
   ports:
     - port: 18082
       name: http
-      targetPort: ed-port
+      targetPort: 18082
       protocol: TCP
     - port: 443
       name: https
-      targetPort: ed-port
+      targetPort: 18082
       protocol: TCP
   type: LoadBalancer    
   selector:
