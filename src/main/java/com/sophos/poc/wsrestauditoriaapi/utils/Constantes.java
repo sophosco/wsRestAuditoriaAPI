@@ -18,5 +18,6 @@ public class Constantes {
 	public final String PRP_FILE_SECURITY_VALIDATE		= "security.endpoint.validate";
 	
 	public final String SECURITY_SUCCESS	= "00";
+	public final String CONTENT_TYPE		= "Content-Type";
 	
 }

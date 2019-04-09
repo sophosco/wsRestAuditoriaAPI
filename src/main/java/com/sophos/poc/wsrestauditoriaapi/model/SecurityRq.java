@@ -27,6 +27,11 @@ public class SecurityRq {
 		this.requestPayload = requestPayload;
 	}
 
+	@Override
+	public String toString() {
+		return "SecurityRq [requestHeader=" + requestHeader + ", requestPayload=" + requestPayload + "]";
+	}
+
 	
 
 	

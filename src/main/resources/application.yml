@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: wsRestAuditoriaAPI
+server:
+  port: 18082
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${POC_EUREKA_URI}
+  instance:
+    preferIpAddress: true
+    status-page-url-path: /v2/api-docs/
+    health-check-url-path: /api/actividad/health
+    virtual-host-name: SBBOGLAPPROJO7
+    metadata-map:
+      app-owner: Sophos Solutions
+      description: Servicio que expone funcionalidades de Auditoria

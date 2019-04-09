@@ -1,5 +1,7 @@
 package com.sophos.poc.wsrestauditoriaapi.api;
 
+import java.util.Calendar;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -105,5 +108,10 @@ public class AuditoriaRestAPI {
 		}
         return new ResponseEntity<Estado>(HttpStatus.UNAUTHORIZED);
     }
+	
+	@RequestMapping(value="/health", method=RequestMethod.GET)
+	public String publishMessage() {
+		return "Servicio Activo"+ Calendar.getInstance().getTime().toString();
+	}
 	
 }

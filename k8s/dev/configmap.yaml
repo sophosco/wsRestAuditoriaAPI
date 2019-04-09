@@ -14,3 +14,4 @@ data:
   POC_ACTIVE_PSS: 'adminsophos.2019'
   POC_ACTIVE_ENDPOINT: 'ssl://b-d29d0c02-d319-46c4-b11d-c298669f7aca-1.mq.us-east-2.amazonaws.com:61617'
   POC_SERVICE_SECURITY_VALIDATE: 'http://wsrestsecurity:3000/services/security/verifyJwtToken/'
+  POC_EUREKA_URI: 'http://eurekaservice:8761/eureka/'
